@@ -182,7 +182,10 @@ typedef NS_ENUM(NSInteger, THSlideType) {
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+	float ver = [[[UIDevice currentDevice] systemVersion] floatValue];
+	if(ver>=7.0	){
+		self.automaticallyAdjustsScrollViewInsets = NO;
+	}
     [self setupViews];
     
     [self reloadData];
