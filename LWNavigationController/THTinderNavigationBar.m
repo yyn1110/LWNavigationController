@@ -18,7 +18,7 @@
 #define IMAGESIZE       40
 #define MARGIN_LEFT     (WIDTH-IMAGESIZE)/2.0 //145
 #define Y_POSITION      23
-#define X_PADDING       20
+#define X_PADDING       10
 #define STEP            (MARGIN_LEFT-X_PADDING) //130
 #define SPEED           (WIDTH/(float)STEP)
 
@@ -50,7 +50,7 @@
         
         if (self.currentPage == idx)
         {
-//            itemViewFrame.origin.x -= itemView.titleOffset/2.0;
+            itemView.center = CGPointMake(C_MARGIN_LEFT + (idx * (kXHiPad ? 240 : STEP))-itemView.titleOffset, C_POSITION);
             [itemView updateViewWithRatio:1.0];
         } else
         {
@@ -76,27 +76,28 @@
     
     CGFloat normalWidth = CGRectGetWidth([[UIScreen mainScreen] bounds]);
     
-    NSInteger centerIndex = xOffset/normalWidth;
+    NSInteger currentIndex = xOffset/normalWidth;
     
     [self.itemViews enumerateObjectsUsingBlock:^(UIView<THTinderNavigationBarItem> *itemView, NSUInteger idx, BOOL *stop) {
-//        // 分左右两边考虑
-//        CGRect itemViewFrame = itemView.frame;
-//        itemViewFrame.origin.x = MARGIN_LEFT + (idx * (kXHiPad ? 240 : STEP)) - xOffset / SPEED;
-//        itemView.frame = itemViewFrame;
-        
-        itemView.center = CGPointMake(C_MARGIN_LEFT + idx * (kXHiPad ? 240 : STEP) - xOffset / SPEED, C_POSITION);
-        if (idx == centerIndex)
-        {
-//            itemView.center = CGPointMake(C_MARGIN_LEFT + idx * (kXHiPad ? 240 : STEP) - xOffset / SPEED - itemView.titleOffset, C_POSITION);
-        }
+
         
         CGFloat ratio;
-        if(xOffset < normalWidth * idx)// 右边
+        
+        if(xOffset < normalWidth * idx)
         {
             ratio = (xOffset - normalWidth * (idx - 1)) / normalWidth;
-        }else // 左边
+            
+        }else
         {
             ratio = 1 - ((xOffset - normalWidth * idx) / normalWidth);
+        }
+        
+        if (idx == currentIndex || idx == currentIndex+1)
+        {
+            itemView.center = CGPointMake(C_MARGIN_LEFT + idx * (kXHiPad ? 240 : STEP) - xOffset / SPEED - itemView.titleOffset * ratio, C_POSITION);
+        } else
+        {
+            itemView.center = CGPointMake(C_MARGIN_LEFT + idx * (kXHiPad ? 240 : STEP) - xOffset / SPEED, C_POSITION);
         }
         
         [itemView updateViewWithRatio:ratio];
