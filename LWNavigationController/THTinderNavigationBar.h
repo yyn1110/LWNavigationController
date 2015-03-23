@@ -26,6 +26,7 @@
 @protocol THTinderNavigationBarItem <NSObject>
 
 @property (nonatomic, assign) NSInteger titleOffset;
+@property (nonatomic, strong) UIView    *exView;
 
 @optional
 

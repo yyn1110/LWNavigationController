@@ -16,16 +16,17 @@ typedef NS_ENUM(NSInteger, THSlideType) {
 
 @interface THTinderNavigationController () <UIScrollViewDelegate>
 
-@property (nonatomic, strong) UIView *centerContainerView;
-@property (nonatomic, strong) UIScrollView *paggingScrollView;
+@property (nonatomic, strong) UIView                *centerContainerView;
+
+@property (nonatomic, strong) UIScrollView          *paggingScrollView;
 
 @property (nonatomic, strong) THTinderNavigationBar *paggingNavbar;
 
-@property (nonatomic, assign) NSInteger currentPage;
+@property (nonatomic, assign) NSInteger             currentPage;
 
-@property (nonatomic, strong) UIViewController *leftViewController;
+@property (nonatomic, strong) UIViewController      *leftViewController;
 
-@property (nonatomic, strong) UIViewController *rightViewController;
+@property (nonatomic, strong) UIViewController      *rightViewController;
 
 @end
 
@@ -46,8 +47,10 @@ typedef NS_ENUM(NSInteger, THSlideType) {
     [self.paggingScrollView setContentOffset:CGPointMake(currentPage * pageWidth, 0) animated:animated];
 }
 
-- (void)reloadData {
-    if (!self.viewControllers.count) {
+- (void)reloadData
+{
+    if (!self.viewControllers.count)
+    {
         return;
     }
     

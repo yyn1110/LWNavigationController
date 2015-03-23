@@ -94,7 +94,7 @@
         
         if (idx == currentIndex || idx == currentIndex+1)
         {
-            itemView.center = CGPointMake(C_MARGIN_LEFT + idx * (kXHiPad ? 240 : STEP) - xOffset / SPEED - itemView.titleOffset * ratio, C_POSITION);
+            itemView.center = CGPointMake(C_MARGIN_LEFT + idx * (kXHiPad ? 240 : STEP) - xOffset / SPEED - itemView.titleOffset/2.0 * ratio, C_POSITION);
         } else
         {
             itemView.center = CGPointMake(C_MARGIN_LEFT + idx * (kXHiPad ? 240 : STEP) - xOffset / SPEED, C_POSITION);
@@ -117,6 +117,7 @@
             UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureHandle:)];
             [itemView addGestureRecognizer:tapGesture];
             [self addSubview:itemView];
+            [self addSubview:itemView.exView];
         }];
     }
     
