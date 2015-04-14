@@ -103,10 +103,14 @@ typedef NS_ENUM(NSInteger, THSlideType) {
 - (THTinderNavigationBar *)paggingNavbar {
     if (!_paggingNavbar) {
         _paggingNavbar = [[THTinderNavigationBar alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), 64)];
-        _paggingNavbar.backgroundColor = [UIColor clearColor];
+        _paggingNavbar.backgroundColor = [UIColor colorWithRed:250/225.0 green:250/225.0 blue:250/225.0 alpha:1.0];
         _paggingNavbar.navigationController = self;
         _paggingNavbar.itemViews = self.navbarItemViews;
         [self.view addSubview:_paggingNavbar];
+        
+        UIImageView *line = [[UIImageView alloc] initWithFrame:CGRectMake(0, 63, CGRectGetWidth(self.view.bounds), 1)];
+        line.backgroundColor = [UIColor colorWithRed:231/255.0 green:231/255.0 blue:231/255.0 alpha:231/255.0];
+        [_paggingNavbar addSubview:line];
     }
     return _paggingNavbar;
 }
@@ -119,15 +123,15 @@ typedef NS_ENUM(NSInteger, THSlideType) {
     }
 }
 
-- (void)setCurrentPage:(NSInteger)currentPage {
-    if (_currentPage == currentPage)
-        return;
+- (void)setCurrentPage:(NSInteger)currentPage
+{
+    if (_currentPage == currentPage) return;
     _currentPage = currentPage;
-    
     self.paggingNavbar.currentPage = currentPage;
-    
     [self setupScrollToTop];
     [self callBackChangedPage];
+    UIViewController *currentVC = self.viewControllers[currentPage];
+    [currentVC viewWillAppear:YES];
 }
 
 - (void)setNavbarItemViews:(NSArray *)navbarItemViews
@@ -181,6 +185,11 @@ typedef NS_ENUM(NSInteger, THSlideType) {
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+	
+	for (UIViewController *con in self.viewControllers) {
+		[con viewWillAppear:animated];
+	}
+	
 }
 
 - (void)viewDidLoad {

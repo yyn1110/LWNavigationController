@@ -18,7 +18,7 @@
 #define IMAGESIZE       40
 #define MARGIN_LEFT     (WIDTH-IMAGESIZE)/2.0 //145
 #define Y_POSITION      23
-#define X_PADDING       10
+#define X_PADDING       0
 #define STEP            (MARGIN_LEFT-X_PADDING) //130
 #define SPEED           (WIDTH/(float)STEP)
 
@@ -58,6 +58,11 @@
         }
         
     }];
+}
+
+- (void)setCurrentPage:(NSInteger)currentPage
+{
+    _currentPage = currentPage;
 }
 
 - (void)tapGestureHandle:(UITapGestureRecognizer *)tapGesture
@@ -124,11 +129,28 @@
     _itemViews = itemViews;
 }
 
+- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event
+{
+    NSLog(@"current page = %d event = %@", (int)_currentPage, event);
+    for (int i=0; i<self.itemViews.count; i++)
+    {
+        UIView *itemView = self.itemViews[i];
+        
+        if (CGRectContainsPoint(itemView.frame, point))
+        {
+            return YES;
+        }
+    }
+    
+    return NO;
+}
+
 #pragma mark - Life Cycle
 
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
+        self.backgroundColor = [UIColor whiteColor];
         self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     }
     return self;
@@ -139,8 +161,3 @@
 }
 
 @end
-
-
-// 版权属于原作者
-// http://code4app.com (cn) http://code4app.net (en)
-// 发布代码于最专业的源码分享网站: Code4App.com 
