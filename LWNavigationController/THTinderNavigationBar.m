@@ -131,7 +131,7 @@
 
 - (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event
 {
-    NSLog(@"current page = %d event = %@", (int)_currentPage, event);
+
     for (int i=0; i<self.itemViews.count; i++)
     {
         UIView *itemView = self.itemViews[i];
